@@ -79,60 +79,60 @@ public class StudentDAL extends DatabaseManager {
         return array;
     }
 
-    public static void main(String[] args) throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        Student st;
-        int choice = -1;
-        System.out.println("Quan ly thong tin sinh vien");
-        System.out.println("---------------------------");
-        StudentDAL student = new StudentDAL();
-        while (choice != 0) {
-            System.out.println("Enter:      0: Exit          1: List         2: Insert       3: Update       4: Delete       5: Find");
-            choice = Integer.parseInt(sc.nextLine());
-            switch (choice) {
-                case 0:
-                    System.out.println("Exit Program");
-                    break;
-                case 1:
-                    student.ReadStudents();
-                    break;
-                case 2:
-                    st = new Student();
-                    System.out.println("Enter Student Last Name: ");
-                    st.setFirstName(sc.nextLine());
-                    System.out.println("Enter Student First Name: ");
-                    st.setLastName(sc.nextLine());
-                    System.out.println("Enter Student Enrollment Date: ");
-                    st.setEnrollmentDate(Date.valueOf(sc.nextLine()));
-                    student.InsertStudent(st);
-                    break;
-                case 3:
-                    st = new Student();
-                    System.out.println("Enter Student ID to Update: ");
-                    st.setPersonID(Integer.parseInt(sc.nextLine()));
-                    System.out.println("Enter Student Last Name: ");
-                    st.setFirstName(sc.nextLine());
-                    System.out.println("Enter Student First Name: ");
-                    st.setLastName(sc.nextLine());
-                    System.out.println("Enter Student Enrollment Date: ");
-                    st.setEnrollmentDate(Date.valueOf(sc.nextLine()));
-                    student.UpdateStudent(st);
-                    break;
-                case 4:
-                    st = new Student();
-                    System.out.println("Enter Student ID to Delete: ");
-                    st.setPersonID(Integer.parseInt(sc.nextLine()));
-                    student.DeleteStudent(st.getPersonID());
-                    break;
-                case 5:
-                    st = new Student();
-                    System.out.println("Enter Student Last Name: ");
-                    st.setFirstName(sc.nextLine());
-                    System.out.println("Enter Student First Name: ");
-                    st.setLastName(sc.nextLine());
-                    student.SearchStudent(st.getFullName());
-                    break;
-            }
-        }
-    }
+//    public static void main(String[] args) throws SQLException {
+//        Scanner sc = new Scanner(System.in);
+//        Student st;
+//        int choice = -1;
+//        System.out.println("Quan ly thong tin sinh vien");
+//        System.out.println("---------------------------");
+//        StudentDAL student = new StudentDAL();
+//        while (choice != 0) {
+//            System.out.println("Enter:      0: Exit          1: List         2: Insert       3: Update       4: Delete       5: Find");
+//            choice = Integer.parseInt(sc.nextLine());
+//            switch (choice) {
+//                case 0:
+//                    System.out.println("Exit Program");
+//                    break;
+//                case 1:
+//                    student.ReadStudents();
+//                    break;
+//                case 2:
+//                    st = new Student();
+//                    System.out.println("Enter Student Last Name: ");
+//                    st.setFirstName(sc.nextLine());
+//                    System.out.println("Enter Student First Name: ");
+//                    st.setLastName(sc.nextLine());
+//                    System.out.println("Enter Student Enrollment Date: ");
+//                    st.setEnrollmentDate(Date.valueOf(sc.nextLine()));
+//                    student.InsertStudent(st);
+//                    break;
+//                case 3:
+//                    st = new Student();
+//                    System.out.println("Enter Student ID to Update: ");
+//                    st.setPersonID(Integer.parseInt(sc.nextLine()));
+//                    System.out.println("Enter Student Last Name: ");
+//                    st.setFirstName(sc.nextLine());
+//                    System.out.println("Enter Student First Name: ");
+//                    st.setLastName(sc.nextLine());
+//                    System.out.println("Enter Student Enrollment Date: ");
+//                    st.setEnrollmentDate(Date.valueOf(sc.nextLine()));
+//                    student.UpdateStudent(st);
+//                    break;
+//                case 4:
+//                    st = new Student();
+//                    System.out.println("Enter Student ID to Delete: ");
+//                    st.setPersonID(Integer.parseInt(sc.nextLine()));
+//                    student.DeleteStudent(st.getPersonID());
+//                    break;
+//                case 5:
+//                    st = new Student();
+//                    System.out.println("Enter Student Last Name: ");
+//                    st.setFirstName(sc.nextLine());
+//                    System.out.println("Enter Student First Name: ");
+//                    st.setLastName(sc.nextLine());
+//                    student.SearchStudent(st.getFullName());
+//                    break;
+//            }
+//        }
+//    }
 }
