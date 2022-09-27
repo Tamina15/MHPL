@@ -1,3 +1,5 @@
-Tuan1\StudentDAL.class
-Tuan1\DatabaseManager.class
-Tuan1\Student.class
+BUS\StudentBUS.class
+DAO\DatabaseManager.class
+DAO\StudentDAL.class
+DTO\Person.class
+DTO\Student.class
