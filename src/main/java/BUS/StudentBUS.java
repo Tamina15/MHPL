@@ -12,5 +12,15 @@ import DAO.StudentDAL;
  * @author Tran Minh Nhat
  */
 public class StudentBUS {
+
     StudentDAL student = new StudentDAL();
+
+    public String[] ReadStudent() {
+        String[] string = null;
+        return string;
+    }
+    public String[] AddStudent() {
+        String[] string = null;
+        return string;
+    }
 }
