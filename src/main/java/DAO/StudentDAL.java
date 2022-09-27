@@ -6,9 +6,11 @@
 package DAO;
 
 import DTO.Student;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,15 +18,22 @@ import java.sql.SQLException;
  */
 public class StudentDAL extends DatabaseManager {
 
+    Date d;
+
     public StudentDAL() {
         super();
         ConnectDatabase();
     }
 
-    public ResultSet ReadStudents() {
+    public ArrayList ReadStudents() throws SQLException {
         String sql = "select * from person where EnrollmentDate > 0";
         ResultSet rs = ExecuteQuery(sql);
-        return rs;
+        ArrayList<Student> array = new ArrayList<>();
+        while (rs.next()) {
+            Student s = new Student(rs.getInt("PersonID"), rs.getString("Lastname"), rs.getString("Firstname"), Date.valueOf(rs.getString("EnrollmentDate")));
+            array.add(s);
+        }
+        return array;
     }
 
     public int InsertStudent(Student s) throws SQLException {
@@ -54,15 +63,19 @@ public class StudentDAL extends DatabaseManager {
         ps.setInt(4, s.getStudentID());
         int result = ps.executeUpdate();
         return result;
-
     }
 
-    public ResultSet SearchStudent(String name) throws SQLException {
+    public ArrayList SearchStudent(String name) throws SQLException {
         String sql = "SELECT * FROM person WHERE concat(Firstname,' ', Lastname) = ?";
         PreparedStatement ps = this.getConnection().prepareStatement(sql);
         ps.setString(1, name);
         ResultSet rs = ps.executeQuery();
-        return rs;
+        ArrayList<Student> array = new ArrayList<>();
+        while (rs.next()) {
+            Student s = new Student(rs.getInt("PersonID"), rs.getString("Lastname"), rs.getString("Firstname"), Date.valueOf(rs.getString("EnrollmentDate")));
+            array.add(s);
+        }
+        return array;
     }
 
 //    public static void main(String[] args) throws SQLException {

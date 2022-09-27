@@ -19,8 +19,27 @@ public class StudentBUS {
         String[] string = null;
         return string;
     }
+
     public String[] AddStudent() {
         String[] string = null;
         return string;
+    }
+
+    public String[] RemoveStudent() {
+        String[] string = null;
+        return string;
+
+    }
+
+    public String[] UpdateStudent() {
+        String[] string = null;
+        return string;
+
+    }
+
+    public String[] SearchStudent() {
+        String[] string = null;
+        return string;
+
     }
 }
