@@ -28,7 +28,7 @@ public class DepartmentDAL extends DatabaseManager {
         ResultSet rs = ExecuteQuery(sql);
         ArrayList<Department> array = new ArrayList<>();
         while (rs.next()) {
-            Department d = new Department(rs.getInt("DepartmentID"), rs.getString("Name"), rs.getDouble("Budget"), Date.valueOf(rs.getString("StartDate")), rs.getString("Administrator"));
+            Department d = new Department(rs.getInt("DepartmentID"), rs.getString("Name"), rs.getDouble("Budget"), Date.valueOf(rs.getString("StartDate")), rs.getInt("Administrator"));
             array.add(d);
         }
         return array;
@@ -41,7 +41,7 @@ public class DepartmentDAL extends DatabaseManager {
         ps.setString(2, d.getName());
         ps.setString(3, Double.toString(d.getBudget()));
         ps.setString(4, d.getStartDate().toString());
-        ps.setString(5, d.getAD());
+        ps.setInt(5, d.getAD());
         int result = ps.executeUpdate();
         return result;
     }
@@ -60,7 +60,7 @@ public class DepartmentDAL extends DatabaseManager {
         ps.setString(1, d.getName());
         ps.setString(2, Double.toString(d.getBudget()));
         ps.setString(3, d.getStartDate().toString());
-        ps.setString(4, d.getAD());
+        ps.setInt(4, d.getAD());
         ps.setString(5, Integer.toString(d.getDepartment()));
         int result = ps.executeUpdate();
         return result;
@@ -73,7 +73,7 @@ public class DepartmentDAL extends DatabaseManager {
         ResultSet rs = ps.executeQuery();
         ArrayList<Department> array = new ArrayList<>();
         while (rs.next()) {
-            Department d = new Department(rs.getInt("DepartmentID"), rs.getString("Name"), rs.getDouble("Budget"), Date.valueOf(rs.getString("StartDate")), rs.getString("Administrator"));
+            Department d = new Department(rs.getInt("DepartmentID"), rs.getString("Name"), rs.getDouble("Budget"), Date.valueOf(rs.getString("StartDate")), rs.getInt("Administrator"));
             array.add(d);
         }
         return array;
