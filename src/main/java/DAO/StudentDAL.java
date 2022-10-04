@@ -11,15 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
  * @author Tran Minh Nhat
  */
 public class StudentDAL extends DatabaseManager {
-
-    Date d;
 
     public StudentDAL() {
         super();
