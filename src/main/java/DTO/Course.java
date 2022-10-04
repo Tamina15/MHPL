@@ -1,55 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DTO;
 
-/**
- *
- * @author Tran Minh Nhat
- */
 public class Course {
-
-    int courseID, departmentID;
-    String tilte, credits;
-
-    public Course(int courseID, int departmentID, String tilte, String credits) {
-        this.courseID = courseID;
-        this.departmentID = departmentID;
-        this.tilte = tilte;
-        this.credits = credits;
-    }
-
-    public int getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
-    }
-
-    public int getDepartmentID() {
-        return departmentID;
-    }
-
-    public void setDepartmentID(int departmentID) {
-        this.departmentID = departmentID;
-    }
-
-    public String getTilte() {
-        return tilte;
-    }
-
-    public void setTilte(String tilte) {
-        this.tilte = tilte;
-    }
-
-    public String getCredits() {
-        return credits;
-    }
-
-    public void setCredits(String credits) {
-        this.credits = credits;
-    }
+	
+	private int CourseID;
+	private int DepartmentID;
+	private String Title;
+	private int Credits;
+	
+	public Course() {
+		
+	}
+	
+	public Course(int CoID, int DeID, String Tit, int Cre) {
+		this.CourseID=CoID;
+		this.DepartmentID=DeID;
+		this.Title=Tit;
+		this.Credits=Cre;
+	}
+	
+	public int getCourseID() {
+		return CourseID;
+	}
+	
+	public void setCourseID(int courseID) {
+		CourseID = courseID;
+	}
+	
+	public int getDepartmentID() {
+		return DepartmentID;
+	}
+	public void setDepartmentID(int departmentID) {
+		DepartmentID = departmentID;
+	}
+	
+	public String getTitle() {
+		return Title;
+	}
+	
+	public void setTitle(String title) {
+		Title = title;
+	}
+	
+	public int getCredits() {
+		return Credits;
+	}
+	
+	public void setCredits(int credits) {
+		Credits = credits;
+	}
 }

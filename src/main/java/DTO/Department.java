@@ -7,13 +7,10 @@ public class Department {
 	private String Name;
 	private double Budget;
 	private Date StartDate;
-	private String AD;
+	private int AD;
+
 	
-	public Department() {
-		
-	}
-	
-	public Department(int De, String Name, double Budget, Date SDate, String AD) {
+	public Department(int De, String Name, double Budget, Date SDate, int AD) {
 		this.DepartmentID=De;
 		this.Name=Name;
 		this.Budget=Budget;
@@ -53,11 +50,11 @@ public class Department {
 		StartDate = startDate;
 	}
 	
-	public String getAD() {
+	public int getAD() {
 		return AD;
 	}
 	
-	public void setAD(String aD) {
+	public void setAD(int aD) {
 		AD = aD;
 	}
 	

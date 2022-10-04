@@ -7,10 +7,6 @@ package DTO;
 
 import java.sql.Date;
 
-/**
- *
- * @author Tran Minh Nhat
- */
 public class Person {
 
     private int PersonID;
