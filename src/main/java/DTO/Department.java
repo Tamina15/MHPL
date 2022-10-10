@@ -18,7 +18,7 @@ public class Department {
 		this.AD=AD;
 	}
 	
-	public int getDepartment() {
+	public int getDepartmentID() {
 		return DepartmentID;
 	}
 	

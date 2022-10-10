@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import BUS.PersonBUS;
+import BLL.PersonBLL;
 import DTO.Person;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -19,13 +19,13 @@ public class person_manage extends javax.swing.JFrame {
     /**
      * Creates new form person_manage
      */
-    PersonBUS bus;
+    PersonBLL bus;
 
     public person_manage() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        bus = new PersonBUS();
+        bus = new PersonBLL();
     }
 
     /**

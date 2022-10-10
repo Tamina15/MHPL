@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import BUS.StudentBUS;
+import BLL.StudentBLL;
 import DTO.Student;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class test extends javax.swing.JFrame {
     /**
      * Creates new form test
      */
-    StudentBUS bus = new StudentBUS();
+    StudentBLL bus = new StudentBLL();
     DefaultComboBoxModel cbm ;
     public test() throws SQLException {
         initComponents();

@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import BUS.PersonBUS;
+import BLL.PersonBLL;
 import DTO.Person;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
@@ -23,7 +23,7 @@ public class person extends javax.swing.JFrame {
     /**
      * Creates new form person
      */
-    PersonBUS bus = new PersonBUS();
+    PersonBLL bus = new PersonBLL();
     DefaultTableModel model;
     Person person;
     static ArrayList<Person> personArray;
@@ -65,7 +65,7 @@ public class person extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Person");
 
-        jLabel2.setText("Tìm kiếm");
+        jLabel2.setText("Search");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
