@@ -34,8 +34,8 @@ public class PersonBLL {
 
     public void AddPerson(ArrayList<Person> array, Person p) {
         try {
-            dal.InsertPerson(p);
             array.add(p);
+            dal.InsertPerson(p);
         } catch (SQLException ex) {
             Logger.getLogger(PersonBLL.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -47,11 +47,11 @@ public class PersonBLL {
                 array.remove(i);
             }
         }
-//        try {
-//            dal.DeletePerson(p.getPersonID());
-//        } catch (SQLException ex) {
-//            Logger.getLogger(PersonBUS.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            dal.DeletePerson(toDel.getPersonID());
+        } catch (SQLException ex) {
+            Logger.getLogger(PersonBLL.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void UpdatePerson(ArrayList<Person> array, Person toChange) {
         for (int i = 0; i < array.size(); i++) {
@@ -62,6 +62,9 @@ public class PersonBLL {
             }
         }
     }
+    
+    
+    
     public DefaultTableModel FindPersonByFullName(DefaultTableModel model, String name) {
         Vector v = new Vector();
         v.add("PersonID");
