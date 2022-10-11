@@ -31,7 +31,6 @@ public class person extends javax.swing.JFrame {
     public person() {
         initComponents();
         this.setLocationRelativeTo(null);
-        person = new Person();
         try {
             personArray = bus.ReadPerson();
             load();
@@ -62,10 +61,16 @@ public class person extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPanel1FocusGained(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Person");
 
-        jLabel2.setText("Search");
+        jLabel2.setText("Tìm kiếm");
 
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -73,7 +78,7 @@ public class person extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Add Person");
+        jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -110,9 +115,14 @@ public class person extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Update");
+        jButton2.setText("Sửa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Delete");
+        jButton3.setText("Xóa");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -196,7 +206,6 @@ public class person extends javax.swing.JFrame {
         // TODO add your handling code here:
         String s = jComboBox1.getSelectedItem().toString();
         jTable1.setModel(bus.SelectPersonType(model, s));
-        System.out.println(s);
         person = null;
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -209,28 +218,40 @@ public class person extends javax.swing.JFrame {
         Timestamp HireDate = (jTable1.getModel().getValueAt(i, 3) != null) ? Timestamp.valueOf(jTable1.getModel().getValueAt(i, 3).toString()) : null;
         Timestamp EnrollmentDate = (jTable1.getModel().getValueAt(i, 4) != null) ? Timestamp.valueOf(jTable1.getModel().getValueAt(i, 4).toString()) : null;
         person = new Person(PersonID, LastName, FirstName, HireDate, EnrollmentDate);
-        System.out.println(person.toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String s = jTextField1.getText();
-            System.out.println(s);
             jTable1.setModel(bus.FindPersonByFullName(model, s));
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        bus.DeletePerson(personArray, person);
-        load();
+        if (person != null) {
+            bus.DeletePerson(personArray, person);
+            person = null;
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new person_manage().setVisible(true);
+        new person_manage(this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (person != null) {
+            new person_manage(this,person).setVisible(true);
+            person = null;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanel1FocusGained
     public void load() {
         Vector v = new Vector();
         v.add("PersonID");
@@ -248,7 +269,6 @@ public class person extends javax.swing.JFrame {
     public ArrayList<Person> getPersonArray() {
         return personArray;
     }
-
 
     /**
      * @param args the command line arguments
@@ -297,7 +317,5 @@ public class person extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-
 
 }

@@ -53,7 +53,15 @@ public class PersonBLL {
 //            Logger.getLogger(PersonBUS.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-
+    public void UpdatePerson(ArrayList<Person> array, Person toChange) {
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getPersonID() == toChange.getPersonID()) {
+                array.set(i, toChange);
+                System.out.println(array.get(i).toString());
+                break;
+            }
+        }
+    }
     public DefaultTableModel FindPersonByFullName(DefaultTableModel model, String name) {
         Vector v = new Vector();
         v.add("PersonID");
