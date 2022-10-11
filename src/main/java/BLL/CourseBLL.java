@@ -62,21 +62,5 @@ public class CourseBLL {
         return newmodel;
     }
 
-    public DefaultTableModel SelectCourseType(DefaultTableModel model, String type) {
-        int column;
-        Vector v = new Vector();
-        v.add("CourseID");
-        v.add("Title");
-        v.add("Credits");
-        v.add("DepartmentID");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, column) != null) {
-                Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2), model.getValueAt(i, 3)};
-                newmodel.addRow(o);
-            }
-        }
-        return newmodel;
-    }
 
 }

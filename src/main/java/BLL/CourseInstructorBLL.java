@@ -60,19 +60,5 @@ public class CourseInstructorBLL {
         return newmodel;
     }
 
-    public DefaultTableModel SelectInstructorType(DefaultTableModel model, String type) {
-        int column;
-        Vector v = new Vector();
-        v.add("CourseID");
-        v.add("PersonID");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, column) != null) {
-                Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1)};
-                newmodel.addRow(o);
-            }
-        }
-        return newmodel;
-    }
 
 }

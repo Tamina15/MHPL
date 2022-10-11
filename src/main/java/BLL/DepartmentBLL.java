@@ -63,22 +63,4 @@ public class DepartmentBLL {
         return newmodel;
     }
 
-    public DefaultTableModel SelectDepartmentType(DefaultTableModel model, String type) {
-        int column;
-        Vector v = new Vector();
-        v.add("DepartmentID");
-        v.add("Name");
-        v.add("Budget");
-        v.add("StartDate");
-        v.add("Administrator");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, column) != null) {
-                Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2), model.getValueAt(i, 3), model.getValueAt(i, 4)};
-                newmodel.addRow(o);
-            }
-        }
-        return newmodel;
-    }
-
 }

@@ -42,7 +42,7 @@ public class grade extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setText("Grade");
 
-        jLabel2.setText("Tìm kiếm");
+        jLabel2.setText("Search");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,11 +63,11 @@ public class grade extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Thêm");
+        jButton1.setText("Add Grade");
 
-        jButton2.setText("Sửa");
+        jButton2.setText("Update");
 
-        jButton3.setText("Xóa");
+        jButton3.setText("Delete");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

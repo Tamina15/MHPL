@@ -5,17 +5,37 @@
  */
 package GUI;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Vector;
+
+import javax.swing.table.DefaultTableModel;
+
+import BLL.CourseBLL;
+import DTO.Course;
+import DTO.Person;
+import DTO.Course;
+
 /**
  *
  * @author Administrator
  */
 public class course extends javax.swing.JFrame {
 
-    /**
-     * Creates new form course
-     */
+	CourseBLL bus = new CourseBLL();
+    DefaultTableModel model;
+    Course course;
+    static ArrayList<Course> CourseArray;
     public course() {
-        initComponents();
+    	initComponents();
+        this.setLocationRelativeTo(null);
+        course = new Course();
+        try {
+            CourseArray = bus.ReadCourse();
+            load();
+        } catch (SQLException ex) {
+            System.out.println("Failed to load resourses");
+        }
     }
 
     /**
@@ -154,9 +174,23 @@ public class course extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    public void load() {
+        Vector v = new Vector();
+        v.add("CourseID");
+        v.add("Title");
+        v.add("Credits");
+        v.add("DepartmentID");
+        model = new DefaultTableModel(v, 0);
+        for (Course a : CourseArray) {
+            model.addRow(a.toObject());
+        }
+        jTable1.setModel(model);
+    }
+    
+    public ArrayList<Course> getCourseArray() {
+        return CourseArray;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -188,6 +222,8 @@ public class course extends javax.swing.JFrame {
             }
         });
     }
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

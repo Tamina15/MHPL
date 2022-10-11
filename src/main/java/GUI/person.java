@@ -73,7 +73,7 @@ public class person extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Thêm");
+        jButton1.setText("Add Person");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -110,9 +110,9 @@ public class person extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Sửa");
+        jButton2.setText("Update");
 
-        jButton3.setText("Xóa");
+        jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);

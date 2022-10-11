@@ -61,21 +61,4 @@ public class StudentGradeBLL {
         }
         return newmodel;
     }
-
-    public DefaultTableModel SelectStudentGradeType(DefaultTableModel model, String type) {
-        int column;
-        Vector v = new Vector();
-        v.add("EnrollmentID");
-        v.add("CourseID");
-        v.add("StudentID");
-        v.add("Grade");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, column) != null) {
-                Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1),model.getValueAt(i, 2),model.getValueAt(i, 3)};
-                newmodel.addRow(o);
-            }
-        }
-        return newmodel;
-    }
 }

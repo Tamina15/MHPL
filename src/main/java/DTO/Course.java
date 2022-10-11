@@ -18,6 +18,11 @@ public class Course {
 		this.Credits=Cre;
 	}
 	
+	public Object[] toObject() {
+        Object[] o = {CourseID, Title, Credits,DepartmentID};
+        return o;
+    }
+	
 	public int getCourseID() {
 		return CourseID;
 	}
