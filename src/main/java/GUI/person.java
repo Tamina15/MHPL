@@ -23,7 +23,7 @@ public class person extends javax.swing.JFrame {
     /**
      * Creates new form person
      */
-    PersonBLL bus = new PersonBLL();
+    PersonBLL bll = new PersonBLL();
     DefaultTableModel model;
     Person person;
     static ArrayList<Person> personArray;
@@ -32,8 +32,8 @@ public class person extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         try {
-            personArray = bus.ReadPerson();
-            load();
+            personArray = bll.ReadPerson();
+            loadModel(personArray);
         } catch (SQLException ex) {
             System.out.println("Failed to load resourses");
         }
@@ -48,6 +48,7 @@ public class person extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -58,6 +59,9 @@ public class person extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +76,11 @@ public class person extends javax.swing.JFrame {
 
         jLabel2.setText("Tìm kiếm");
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
         jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextField1KeyPressed(evt);
@@ -205,7 +214,7 @@ public class person extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
         String s = jComboBox1.getSelectedItem().toString();
-        jTable1.setModel(bus.SelectPersonType(model, s));
+        jTable1.setModel(bll.SelectPersonType(model, s));
         person = null;
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -218,20 +227,28 @@ public class person extends javax.swing.JFrame {
         Timestamp HireDate = (jTable1.getModel().getValueAt(i, 3) != null) ? Timestamp.valueOf(jTable1.getModel().getValueAt(i, 3).toString()) : null;
         Timestamp EnrollmentDate = (jTable1.getModel().getValueAt(i, 4) != null) ? Timestamp.valueOf(jTable1.getModel().getValueAt(i, 4).toString()) : null;
         person = new Person(PersonID, LastName, FirstName, HireDate, EnrollmentDate);
+        System.out.println(person.toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String s = jTextField1.getText();
-            jTable1.setModel(bus.FindPersonByFullName(model, s));
+            if (!s.isBlank()) {
+                ArrayList<Person> find = bll.FindPersonByName(s);
+                loadModel(find);
+                //jTable1.setModel(bll.FindPersonByFullName(model, s));
+            } else {
+                loadModel(personArray);
+            }
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         if (person != null) {
-            bus.DeletePerson(personArray, person);
+            bll.DeletePerson(personArray, person);
+            loadModel(personArray);
             person = null;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -244,7 +261,7 @@ public class person extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if (person != null) {
-            new person_manage(this,person).setVisible(true);
+            new person_manage(this, person).setVisible(true);
             person = null;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -252,18 +269,18 @@ public class person extends javax.swing.JFrame {
     private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1FocusGained
-    public void load() {
-        Vector v = new Vector();
-        v.add("PersonID");
-        v.add("LastName");
-        v.add("FirstName");
-        v.add("HireDate");
-        v.add("EnrollmentDate");
-        model = new DefaultTableModel(v, 0);
-        for (Person a : personArray) {
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    public void loadModel(ArrayList<Person> array) {
+        Object[] o = {"PersonID", "LastName", "FirstName", "HireDate", "EnrollmentDate"};
+        model = new DefaultTableModel(o, 0);
+        for (Person a : array) {
             model.addRow(a.toObject());
         }
         jTable1.setModel(model);
+        jComboBox1.setSelectedIndex(0);
     }
 
     public ArrayList<Person> getPersonArray() {
@@ -274,14 +291,14 @@ public class person extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Nimbll look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Nimbll (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Nimbll".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -313,6 +330,7 @@ public class person extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

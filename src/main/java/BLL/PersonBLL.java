@@ -45,34 +45,33 @@ public class PersonBLL {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getPersonID() == toDel.getPersonID()) {
                 array.remove(i);
+                try {
+                    dal.DeletePerson(toDel.getPersonID());
+                } catch (SQLException ex) {
+                    Logger.getLogger(PersonBLL.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-        try {
-            dal.DeletePerson(toDel.getPersonID());
-        } catch (SQLException ex) {
-            Logger.getLogger(PersonBLL.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
+
     public void UpdatePerson(ArrayList<Person> array, Person toChange) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getPersonID() == toChange.getPersonID()) {
                 array.set(i, toChange);
+                try {
+                    dal.UpdatePerson(toChange);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PersonBLL.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 System.out.println(array.get(i).toString());
                 break;
             }
         }
     }
-    
-    
-    
+
     public DefaultTableModel FindPersonByFullName(DefaultTableModel model, String name) {
-        Vector v = new Vector();
-        v.add("PersonID");
-        v.add("LastName");
-        v.add("FirstName");
-        v.add("HireDate");
-        v.add("EnrollmentDate");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
+        Object[] header = {"PersonID", "LastName", "FirstName", "HireDate", "EnrollmentDate"};
+        DefaultTableModel newmodel = new DefaultTableModel(header, 0);
         for (int i = 0; i < model.getRowCount(); i++) {
             if (model.getValueAt(i, 1).toString().concat(" " + model.getValueAt(i, 2).toString()).equals(name)) {
                 Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1), model.getValueAt(i, 2), model.getValueAt(i, 3), model.getValueAt(i, 4)};
@@ -80,6 +79,16 @@ public class PersonBLL {
             }
         }
         return newmodel;
+    }
+
+    public ArrayList<Person> FindPersonByName(String name) {
+        ArrayList<Person> temp = new ArrayList<>();
+        for (Person p : persons) {
+            if (p.getFullName().equals(name) || p.getFirstName().equals(name) || p.getLastName().equals(name)) {
+                temp.add(p);
+            }
+        }
+        return temp;
     }
 
     public DefaultTableModel SelectPersonType(DefaultTableModel model, String type) {

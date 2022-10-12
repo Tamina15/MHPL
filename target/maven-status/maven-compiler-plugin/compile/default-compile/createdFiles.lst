@@ -3,6 +3,7 @@ DAL\OfficeAssignmentDAL.class
 GUI\person_manage$7.class
 GUI\person_manage.class
 GUI\instructor.class
+GUI\grade$3.class
 DAL\DepartmentDAL.class
 GUI\person$5.class
 BLL\CourseBLL.class
@@ -19,8 +20,10 @@ DTO\Onsite.class
 GUI\person_manage$6.class
 GUI\person$9.class
 DTO\Instructor.class
+GUI\grade$6.class
 DAL\StudentGradeDAL.class
 DAL\TeacherDAL.class
+GUI\grade$2.class
 GUI\course.class
 GUI\person$6.class
 GUI\person_manage$3.class
@@ -28,6 +31,7 @@ BLL\StudentGradeBLL.class
 DAL\CourseDAL.class
 GUI\course$2.class
 GUI\person$3.class
+GUI\grade$5.class
 DAL\DatabaseManager.class
 GUI\person_manage$2.class
 BLL\OnsiteBLL.class
@@ -39,11 +43,14 @@ DAL\OnlineDAL.class
 BLL\PersonBLL.class
 BLL\StudentBLL.class
 GUI\person$4.class
+GUI\person$10.class
 GUI\instructor$1.class
 BLL\OnlineBLL.class
 GUI\person_manage$1.class
 GUI\grade$1.class
+GUI\grade$7.class
 GUI\person$7.class
 GUI\course_instructor.class
 GUI\person_manage$8.class
 DAL\InstructorDAL.class
+GUI\grade$4.class

@@ -24,6 +24,11 @@ public class StudentGrade {
         this.Grade = Grade;
     }
 
+    public Object[] toObject() {
+        Object[] o = {EnrollmentID, CourseID, StudentID, Grade};
+        return o;
+    }
+
     public int getEnrollmentID() {
         return EnrollmentID;
     }
@@ -54,5 +59,10 @@ public class StudentGrade {
 
     public void setGrade(float Grade) {
         this.Grade = Grade;
+    }
+
+    @Override
+    public String toString() {
+        return "StudentGrade{" + "EnrollmentID=" + EnrollmentID + ", CourseID=" + CourseID + ", StudentID=" + StudentID + ", Grade=" + Grade + '}';
     }
 }
