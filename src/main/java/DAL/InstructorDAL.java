@@ -20,11 +20,12 @@ public class InstructorDAL extends DatabaseManager {
     }
 
     public ArrayList ReadInstructors() throws SQLException {
-        String sql = "SELECT courseinstructor.CourseID, courseinstructor.PersonID, course.Title, concat(person.Lastname ,\" \",person.Firstname) as name FROM `courseinstructor`, course, person WHERE course.CourseID= courseinstructor.CourseID AND person.PersonID = courseinstructor.PersonID";
+        String sql = "SELECT courseinstructor.CourseID, courseinstructor.PersonID, course.Title, concat(person.Lastname ,' ',person.Firstname) as name FROM courseinstructor, course, person WHERE course.CourseID= courseinstructor.CourseID AND person.PersonID = courseinstructor.PersonID";
         ResultSet rs = ExecuteQuery(sql);
         ArrayList<Instructor> array = new ArrayList<>();
         while (rs.next()) {
             Instructor d = new Instructor(rs.getInt("CourseID"), rs.getInt("PersonID"), rs.getString("Title"), rs.getString("name"));
+            array.add(d);
         }
         return array;
     }
@@ -32,17 +33,23 @@ public class InstructorDAL extends DatabaseManager {
     public int InsertInstructor(Instructor d) throws SQLException {
         String sql = "INSERT INTO courseinstructor(CourseID, PersonID) VALUES (?,?)";
         PreparedStatement ps = this.getConnection().prepareStatement(sql);
-        ps.setString(1, Integer.toString(d.getCourseID()));
-        ps.setString(2, Integer.toString(d.getPersonID()));
+        ps.setInt(1, d.getCourseID());
+        ps.setInt(2, d.getPersonID());
         int result = ps.executeUpdate();
         return result;
     }
 
-    public int DeleteInstructor(int personid) throws SQLException {
-        String sql = "DELETE FROM courseinstructor WHERE PersonID = ?";
+    public int DeleteInstructor(Instructor d) throws SQLException {
+        String sql = "DELETE FROM courseinstructor WHERE CourseID = ? AND PersonID = ?";
         PreparedStatement ps = this.getConnection().prepareStatement(sql);
-        ps.setInt(1, personid);
+        ps.setInt(1, d.getCourseID());
+        ps.setInt(2, d.getPersonID());
         int result = ps.executeUpdate();
+        if (result == 1) {
+            System.out.println("Xóa thành công");
+        } else {
+            System.out.println("Xóa thất bại");
+        }
         return result;
     }
 
@@ -55,26 +62,19 @@ public class InstructorDAL extends DatabaseManager {
     }
 
     public int UpdateInstructor(Instructor old, Instructor newI) throws SQLException {
-        String sql = "UPDATE courseinstructor SET CourseID=?,PersonID=? WHERE CourseID=?,PersonID=?";
+        String sql = "UPDATE courseinstructor SET CourseID = ? , PersonID = ? WHERE CourseID = ? AND PersonID = ?";
         PreparedStatement ps = this.getConnection().prepareStatement(sql);
-        ps.setInt(1, old.getCourseID());
-        ps.setInt(2, old.getPersonID());
-        ps.setInt(3, newI.getCourseID());
-        ps.setInt(4, newI.getPersonID());
+        ps.setInt(1, newI.getCourseID());
+        ps.setInt(2, newI.getPersonID());
+        ps.setInt(3, old.getCourseID());
+        ps.setInt(4, old.getPersonID());
         int result = ps.executeUpdate();
+                if (result == 1) {
+            System.out.println("Sửa thành công");
+        } else {
+            System.out.println("Sửa thất bại");
+        }
         return result;
     }
 
-    public ArrayList SearchInstructor(String dname) throws SQLException {
-        String sql = "SELECT * FROM courseinstructor WHERE PersonID = ?";
-        PreparedStatement ps = this.getConnection().prepareStatement(sql);
-        ps.setString(1, dname);
-        ResultSet rs = ps.executeQuery();
-        ArrayList<Instructor> array = new ArrayList<>();
-        while (rs.next()) {
-            Instructor d = new Instructor(rs.getInt("CourseID"), rs.getInt("PersonID"), rs.getString("Title"), rs.getString("name"));
-            array.add(d);
-        }
-        return array;
-    }
 }

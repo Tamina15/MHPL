@@ -16,11 +16,10 @@ public class student_grade extends javax.swing.JFrame {
     
     grade parent;
     StudentGradeBLL bll = new StudentGradeBLL();
-    
-    ;
 
     /**
      * Creates new form student_grade
+     * @param g
      */
     public student_grade(grade g) {
         initComponents();
@@ -204,8 +203,8 @@ public class student_grade extends javax.swing.JFrame {
             int student = Integer.parseInt(jTextField3.getText());
             float grade = Float.parseFloat(jTextField4.getText());
             StudentGrade s = new StudentGrade(enrollment, course, student, grade);
-            bll.AddStudentGrade(parent.gradeArray, s);
-            parent.loadModel(parent.gradeArray);
+            bll.AddStudentGrade(GUI.grade.gradeArray, s);
+            parent.loadModel(GUI.grade.gradeArray);
             dispose();
         } catch (NumberFormatException e) {
             System.out.println("Vui lòng nhập lại");
@@ -220,8 +219,8 @@ public class student_grade extends javax.swing.JFrame {
             int student = Integer.parseInt(jTextField3.getText());
             float grade = Float.parseFloat(jTextField4.getText());
             StudentGrade s = new StudentGrade(enrollment, course, student, grade);
-            bll.UpdateStudentGrade(parent.gradeArray, s);
-            parent.loadModel(parent.gradeArray);
+            bll.UpdateStudentGrade(GUI.grade.gradeArray, s);
+            parent.loadModel(GUI.grade.gradeArray);
             dispose();
         } catch (NumberFormatException e) {
             System.out.println("Vui lòng nhập lại");

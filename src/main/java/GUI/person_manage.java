@@ -20,7 +20,7 @@ public class person_manage extends javax.swing.JFrame {
      * Creates new form person_manage
      */
     PersonBLL bll;
-    Person oldPerson;
+    Person person;
     person parent;
 
     public person_manage(person pr) {
@@ -59,7 +59,7 @@ public class person_manage extends javax.swing.JFrame {
             this.jComboBox1.setSelectedIndex(1);
             this.jTextField5.setText(p.getEnrollmentDate().toString());
         }
-        oldPerson = p;
+        person = p;
         parent = pr;
     }
 
@@ -280,8 +280,8 @@ public class person_manage extends javax.swing.JFrame {
                 break;
         }
         Person p = new Person(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), hire, enrollment);
-        bll.AddPerson(person.personArray, p);
-        parent.loadModel(person.personArray);
+        bll.AddPerson(GUI.person.personArray, p);
+        parent.loadModel(GUI.person.personArray);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -327,8 +327,8 @@ public class person_manage extends javax.swing.JFrame {
                 break;
         }
         Person p = new Person(Integer.parseInt(jTextField1.getText()), jTextField2.getText(), jTextField3.getText(), hire, enrollment);
-        bll.UpdatePerson(person.personArray, p);
-        parent.loadModel(person.personArray);
+        bll.UpdatePerson(GUI.person.personArray, p);
+        parent.loadModel(GUI.person.personArray);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 

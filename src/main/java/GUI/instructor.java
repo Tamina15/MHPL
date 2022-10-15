@@ -7,6 +7,7 @@ package GUI;
 
 import BLL.CourseInstructorBLL;
 import DTO.Instructor;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -26,12 +27,17 @@ public class instructor extends javax.swing.JFrame {
     Instructor instructor;
     static ArrayList<Instructor> instructorArray;
     DefaultTableModel model;
-    Object[] header = {"CourseID", "Course Name", "PersonID", "Person Name"};
+    Object[] header = {"InstructorID", "Instructor Name", "PersonID", "Person Name"};
 
     public instructor() {
         initComponents();
         bll = new CourseInstructorBLL();
-        instructorArray = new ArrayList<>();
+        try {
+            instructorArray = bll.ReadInstructor();
+        } catch (SQLException ex) {
+            Logger.getLogger(instructor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        loadModel(instructorArray);
     }
 
     /**
@@ -110,7 +116,7 @@ public class instructor extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "CourseID", "Course Name", "PersonID", "Person Name" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -186,10 +192,62 @@ public class instructor extends javax.swing.JFrame {
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String s = jTextField1.getText();
+            if (!s.isBlank()) {
+                ArrayList<Instructor> find = bll.FindInstructorByFullName(s);
+                loadModel(find);
+                //jTable1.setModel(bll.FindPersonByFullName(model, s));
+            } else {
+                loadModel(instructorArray);
+            }
+        }
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        switch (jComboBox1.getSelectedIndex()) {
+            case 1:
+                Object[] h1 = {"CourseID"};
+                model = new DefaultTableModel(h1, 0);
+                for (Instructor c : instructorArray) {
+                    Object[] o = {c.getCourseID()};
+                    model.addRow(o);
+                }
+                break;
+            case 2:
+                Object[] h2 = {"Course Name"};
+                model = new DefaultTableModel(h2, 0);
+                for (Instructor c : instructorArray) {
+                    Object[] o = {c.getCourseName()};
+                    model.addRow(o);
+                }
+                break;
+            case 3:
+                Object[] h3 = {"PersonID"};
+                model = new DefaultTableModel(h3, 0);
+                for (Instructor c : instructorArray) {
+                    Object[] o = {c.getPersonID()};
+                    model.addRow(o);
+                }
+                break;
+            case 4:
+                Object[] h4 = {"Person Name"};
+                model = new DefaultTableModel(h4, 0);
+                for (Instructor c : instructorArray) {
+                    Object[] o = {c.getPersonName()};
+                    model.addRow(o);
+                }
+                break;
+            default:
+                model = new DefaultTableModel(header, 0);
+                for (Instructor c : instructorArray) {
+                    Object[] o = c.toObject();
+                    model.addRow(o);
+                }
+                break;
+        }
+        jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -200,14 +258,18 @@ public class instructor extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int i = jTable1.getSelectedRow();
-        int CourseID = Integer.parseInt(jTable1.getModel().getValueAt(i, 0).toString());
-        int PersonID = Integer.parseInt(jTable1.getModel().getValueAt(i, 2).toString());
-        instructor = new Instructor(CourseID, PersonID);
+        int courseID = instructorArray.get(i).getCourseID();
+        int personID = instructorArray.get(i).getPersonID();
+        instructor = new Instructor(courseID, personID);
         System.out.println(instructor.toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if (instructor != null) {
+            new course_instructor(this, instructor).setVisible(true);
+            instructor = null;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -228,11 +290,11 @@ public class instructor extends javax.swing.JFrame {
     }
 
     protected void reloadModel() {
-        header = new Object[]{"CourseID", "Course Name", "PersonID", "Person Name"};
+        header = new Object[]{"InstructorID", "Instructor Name", "PersonID", "Person Name"};
         try {
             instructorArray = bll.ReadInstructor();
         } catch (SQLException ex) {
-            Logger.getLogger(course.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(instructor.class.getName()).log(Level.SEVERE, null, ex);
         }
         loadModel(instructorArray);
     }

@@ -27,7 +27,7 @@ public class Instructor {
     }
 
     public Object[] toObject() {
-        return new Object[]{CourseID,courseName, PersonID, personName};
+        return new Object[]{CourseID, courseName, PersonID, personName};
     }
 
     public void setCourseID(int courseID) {
@@ -56,6 +56,11 @@ public class Instructor {
 
     public void setPersonName(String personName) {
         this.personName = personName;
+    }
+
+    @Override
+    public String toString() {
+        return "Instructor{" + "CourseID=" + CourseID + ", PersonID=" + PersonID + '}';
     }
 
 }

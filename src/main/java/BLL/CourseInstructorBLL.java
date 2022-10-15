@@ -2,11 +2,9 @@ package BLL;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.table.DefaultTableModel;
 
 import DAL.InstructorDAL;
 import DTO.Instructor;
@@ -34,12 +32,26 @@ public class CourseInstructorBLL {
         }
     }
 
+    public void UpdateInstructor(ArrayList<Instructor> array, Instructor toChange, Instructor old) {
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getCourseID() == old.getCourseID() && array.get(i).getPersonID() == old.getPersonID()) {
+                array.set(i, toChange);
+                try {
+                    dal.UpdateInstructor(old, toChange);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CourseInstructorBLL.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            }
+        }
+    }
+
     public void DeleteInstructor(ArrayList<Instructor> array, Instructor toDel) {
         for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getPersonID() == toDel.getPersonID()) {
+            if (array.get(i).getCourseID() == toDel.getCourseID() && array.get(i).getPersonID() == toDel.getPersonID()) {
                 array.remove(i);
                 try {
-                    dal.DeleteInstructor(toDel.getCourseID());
+                    dal.DeleteInstructor(toDel);
                 } catch (SQLException ex) {
                     Logger.getLogger(CourseInstructorBLL.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -47,18 +59,14 @@ public class CourseInstructorBLL {
         }
     }
 
-    public DefaultTableModel FindInstructorByFullName(DefaultTableModel model, String name) {
-        Vector v = new Vector();
-        v.add("CourseID");
-        v.add("PersonID");
-        DefaultTableModel newmodel = new DefaultTableModel(v, 0);
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, 1).toString().concat(" " + model.getValueAt(i, 2).toString()).equals(name)) {
-                Object[] o = {model.getValueAt(i, 0), model.getValueAt(i, 1)};
-                newmodel.addRow(o);
+    public ArrayList<Instructor> FindInstructorByFullName(String name) {
+        ArrayList<Instructor> array = new ArrayList<>();
+        for (Instructor i : Instructors) {
+            if (i.getPersonName().equals(name)) {
+                array.add(i);
             }
         }
-        return newmodel;
+        return array;
     }
 
 }
