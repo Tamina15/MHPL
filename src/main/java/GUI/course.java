@@ -7,14 +7,13 @@ package GUI;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
 import BLL.CourseBLL;
 import DTO.Course;
-import DTO.Person;
-import DTO.Course;
+import java.awt.event.KeyEvent;
+import java.sql.Time;
 
 /**
  *
@@ -22,17 +21,23 @@ import DTO.Course;
  */
 public class course extends javax.swing.JFrame {
 
-	CourseBLL bus = new CourseBLL();
+    CourseBLL bll = new CourseBLL();
     DefaultTableModel model;
-    Course course;
+    Course course = null;
     static ArrayList<Course> CourseArray;
+
+    static ArrayList<Course> currentArray;
+
+    Object[] header = {"CourseID", "Title", "Credits", "DepartmentID"};
+
     public course() {
-    	initComponents();
+        initComponents();
         this.setLocationRelativeTo(null);
-        course = new Course();
+        this.setResizable(false);
         try {
-            CourseArray = bus.ReadCourse();
-            load();
+            CourseArray = bll.ReadCourse();
+            currentArray = bll.ReadCourse();
+            loadModel(currentArray);
         } catch (SQLException ex) {
             System.out.println("Failed to load resourses");
         }
@@ -47,30 +52,53 @@ public class course extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Khóa học Online");
+        jLabel1.setText("Khóa học");
 
         jButton1.setText("Thêm khóa học");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Tìm kiếm");
 
-        jLabel3.setText("Khoa");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CNTT", "QTKD", "TC-NH", "GDMN" }));
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,11 +127,33 @@ public class course extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Sửa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Xóa");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Online", "Onsite" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,12 +169,11 @@ public class course extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(107, 107, 107)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(344, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
@@ -144,9 +193,7 @@ public class course extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,32 +221,135 @@ public class course extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void load() {
-        Vector v = new Vector();
-        v.add("CourseID");
-        v.add("Title");
-        v.add("Credits");
-        v.add("DepartmentID");
-        model = new DefaultTableModel(v, 0);
-        for (Course a : CourseArray) {
-            model.addRow(a.toObject());
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int i = jTable1.getSelectedRow();
+        int courseID = currentArray.get(i).getCourseID();
+        String title = currentArray.get(i).getTitle();
+        int credits = currentArray.get(i).getCredits();
+        int department = currentArray.get(i).getDepartmentID();
+        switch (jComboBox1.getSelectedIndex()) {
+            case 0:
+                course = new Course(courseID, title, credits, department);
+                break;
+            case 1:
+                String url = currentArray.get(i).getOnline().getUrl();
+                course = new Course(courseID, title, credits, department, url);
+                break;
+            case 2:
+                String location = currentArray.get(i).getOffline().getLocal();
+                String days = currentArray.get(i).getOffline().getDays();
+                Time time = currentArray.get(i).getOffline().getTime();
+                course = new Course(courseID, title, credits, department, location, days, time);
+                break;
+        }
+        System.out.println(course.toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String s = jTextField1.getText();
+            try {
+                if (!s.isBlank()) {
+                    ArrayList<Course> find = bll.FindCourseByID(Integer.parseInt(s));
+                    loadModel(find);
+                } else {
+                    loadModel(currentArray);
+                }
+            } catch (NumberFormatException n) {
+                if (!s.isBlank()) {
+                    ArrayList<Course> find = bll.FindCourseByName(s);
+                    loadModel(find);
+                } else {
+                    loadModel(currentArray);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if (course != null) {
+            bll.DeleteCourse(currentArray, course);
+            loadModel(currentArray);
+        }
+        course=null;
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        new course_manage(this).setVisible(true);
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        switch (jComboBox1.getSelectedIndex()) {
+            case 1:
+                currentArray = bll.ReadOnlineCourse();
+                Object[] h1 = {"CourseID", "Title", "Credits", "DepartmentID", "url"};
+                model = new DefaultTableModel(h1, 0);
+                for (Course c : currentArray) {
+                    Object[] o = c.toOnline();
+                    model.addRow(o);
+                }
+                break;
+            case 2:
+                currentArray = bll.ReadOfflineCourse();
+                Object[] h2 = {"CourseID", "Title", "Credits", "DepartmentID", "Location", "Days", "Time"};
+                model = new DefaultTableModel(h2, 0);
+                for (Course c : currentArray) {
+                    Object[] o = c.toOffline();
+                    model.addRow(o);
+                }
+                break;
+            default:
+                reloadModel();
+                return;
+        }
+        jTable1.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (course != null) {
+            new course_manage(this, course, jComboBox1.getSelectedIndex()).setVisible(true);
+        }
+        course=null;
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void loadModel(ArrayList<Course> array) {
+        model = new DefaultTableModel(header, 0);
+        for (Course c : array) {
+            Object[] o = c.toObject();
+            model.addRow(o);
         }
         jTable1.setModel(model);
     }
-    
+
+    protected void reloadModel() {
+        loadModel(CourseArray);
+    }
+
     public ArrayList<Course> getCourseArray() {
         return CourseArray;
     }
-    
+
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Nimbll look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Nimbll (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Nimbll".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -222,7 +372,6 @@ public class course extends javax.swing.JFrame {
             }
         });
     }
-    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -230,9 +379,9 @@ public class course extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

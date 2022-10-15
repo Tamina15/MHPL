@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class DatabaseManager {
 
-    Connection connection;
+    static Connection connection;
     Statement statement;
     PreparedStatement preparedStatement;
     String host, port, dbName, dbUser, dbPassword;
@@ -37,9 +37,11 @@ public class DatabaseManager {
     public void ConnectDatabase() {
         String dbPath = "jdbc:mysql://" + host + ":" + port + "/" + dbName + "?useUnicode=yes&characterEncoding=UTF-8";
         try {
-            connection = DriverManager.getConnection(dbPath, dbUser, dbPassword);
-            statement = connection.createStatement();
-            System.out.println("Database Connected");
+            if (connection == null) {
+                connection = DriverManager.getConnection(dbPath, dbUser, dbPassword);
+                statement = connection.createStatement();
+                System.out.println("Database Connected");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -54,7 +56,8 @@ public class DatabaseManager {
         }
         return resultSet;
     }
-    public void UpdateQuery(){
+
+    public void UpdateQuery() {
         try {
             preparedStatement.executeUpdate();
         } catch (SQLException ex) {

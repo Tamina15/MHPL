@@ -75,4 +75,12 @@ public class StudentGradeDAL extends DatabaseManager {
         }
         return array;
     }
+
+    public int DeleteStudentGradeByCourse(int id) throws SQLException {
+        String sql = "DELETE FROM studentgrade WHERE  CourseID = ?";
+        PreparedStatement ps = this.getConnection().prepareStatement(sql);
+        ps.setInt(1, id);
+        int result = ps.executeUpdate();
+        return result;
+    }
 }
