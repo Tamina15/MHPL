@@ -12,7 +12,8 @@ import DAL.InstructorDAL;
 import DTO.Instructor;
 
 public class CourseInstructorBLL {
-	InstructorDAL dal;
+
+    InstructorDAL dal;
     ArrayList<Instructor> Instructors;
 
     public CourseInstructorBLL() {
@@ -35,15 +36,15 @@ public class CourseInstructorBLL {
 
     public void DeleteInstructor(ArrayList<Instructor> array, Instructor toDel) {
         for (int i = 0; i < array.size(); i++) {
-            if (array.get(i).getPersonID()== toDel.getPersonID()) {
+            if (array.get(i).getPersonID() == toDel.getPersonID()) {
                 array.remove(i);
+                try {
+                    dal.DeleteInstructor(toDel.getCourseID());
+                } catch (SQLException ex) {
+                    Logger.getLogger(CourseInstructorBLL.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-//        try {
-//            dal.DeleteInstructor(p.getInstructorID());
-//        } catch (SQLException ex) {
-//            Logger.getLogger(InstructorBUS.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     public DefaultTableModel FindInstructorByFullName(DefaultTableModel model, String name) {
@@ -59,6 +60,5 @@ public class CourseInstructorBLL {
         }
         return newmodel;
     }
-
 
 }

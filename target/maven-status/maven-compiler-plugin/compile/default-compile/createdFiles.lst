@@ -32,7 +32,9 @@ GUI\person_manage$3.class
 GUI\course$5.class
 BLL\StudentGradeBLL.class
 DAL\CourseDAL.class
+GUI\student_grade$5.class
 GUI\course$2.class
+GUI\student_grade$4.class
 GUI\person$3.class
 GUI\course$3.class
 GUI\grade$5.class
@@ -46,6 +48,7 @@ DTO\Department.class
 GUI\person_manage$9.class
 DAL\OnlineDAL.class
 BLL\PersonBLL.class
+GUI\course$10.class
 BLL\StudentBLL.class
 GUI\person$4.class
 GUI\person$10.class
@@ -53,6 +56,7 @@ GUI\instructor$1.class
 BLL\OnlineBLL.class
 GUI\course$4.class
 GUI\person_manage$1.class
+GUI\student_grade$3.class
 GUI\grade$1.class
 GUI\grade$7.class
 GUI\course$7.class

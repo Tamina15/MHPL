@@ -194,29 +194,43 @@ public class grade extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int i = jTable1.getSelectedRow();
-        int enrollmentID = Integer.parseInt(jTable1.getModel().getValueAt(i, 0).toString());
-        int courseID = Integer.parseInt(jTable1.getModel().getValueAt(i, 1).toString());
-        int studentID = Integer.parseInt(jTable1.getModel().getValueAt(i, 2).toString());
-        float grade = Float.parseFloat(jTable1.getModel().getValueAt(i, 3).toString());
+        //int enrollmentID = Integer.parseInt(jTable1.getModel().getValueAt(i, 0).toString());
+//        int courseID = Integer.parseInt(jTable1.getModel().getValueAt(i, 1).toString());
+//        int studentID = Integer.parseInt(jTable1.getModel().getValueAt(i, 2).toString());
+//        float grade = Float.parseFloat(jTable1.getModel().getValueAt(i, 3).toString());
+        int enrollmentID = gradeArray.get(i).getEnrollmentID();
+        int courseID = gradeArray.get(i).getCourseID();
+        int studentID = gradeArray.get(i).getStudentID();
+        float grade = gradeArray.get(i).getGrade();
         studentGrade = new StudentGrade(enrollmentID, courseID, studentID, grade);
         System.out.println(studentGrade.toString());
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        new student_grade(this).setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        if (studentGrade != null) {
+            new student_grade(this, studentGrade).setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if (studentGrade != null) {
+            bll.DeleteStudentGrade(gradeArray, studentGrade);
+            loadModel(gradeArray);
+        }
+        studentGrade=null;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-
+        loadModel(gradeArray);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
@@ -239,18 +253,58 @@ public class grade extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1KeyPressed
 
     public void newComboBox() {
-        Object[] header = {"EnrollmentID", "CourseID", "StudentID", "Grade"};
+        Object[] header = {"All", "EnrollmentID", "CourseID", "StudentID", "Grade"};
         DefaultComboBoxModel m = new DefaultComboBoxModel(header);
         jComboBox1.setModel(m);
     }
 
     public void loadModel(ArrayList<StudentGrade> array) {
-        model = new DefaultTableModel(header, 0);
-        for (StudentGrade g : array) {
-            Object[] o = g.toObject();
-            model.addRow(o);
+        switch (jComboBox1.getSelectedIndex()) {
+            case 1:
+                Object[] h1 = {"EnrollmentID"};
+                model = new DefaultTableModel(h1, 0);
+                for (StudentGrade g : array) {
+                    Object[] o = {g.getEnrollmentID()};
+                    model.addRow(o);
+                }
+                break;
+            case 2:
+                Object[] h2 = {"CourseID"};
+                model = new DefaultTableModel(h2, 0);
+                for (StudentGrade g : array) {
+                    Object[] o = {g.getCourseID()};
+                    model.addRow(o);
+                }
+                break;
+            case 3:
+                Object[] h3 = {"StudentID"};
+                model = new DefaultTableModel(h3, 0);
+                for (StudentGrade g : array) {
+                    Object[] o = {g.getStudentID()};
+                    model.addRow(o);
+                }
+                break;
+            case 4:
+                Object[] h4 = {"Grade"};
+                model = new DefaultTableModel(h4, 0);
+                for (StudentGrade g : array) {
+                    Object[] o = {g.getGrade()};
+                    model.addRow(o);
+                }
+                break;
+            default:
+                model = new DefaultTableModel(header, 0);
+                for (StudentGrade g : array) {
+                    Object[] o = g.toObject();
+                    model.addRow(o);
+                }
+                break;
         }
         jTable1.setModel(model);
+    }
+
+    public static ArrayList<StudentGrade> getGradeArray() {
+        return gradeArray;
     }
 
     /**

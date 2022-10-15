@@ -7,11 +7,13 @@ package GUI;
 
 import BLL.PersonBLL;
 import DTO.Person;
+import static GUI.course.CourseArray;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +29,7 @@ public class person extends javax.swing.JFrame {
     DefaultTableModel model;
     Person person;
     static ArrayList<Person> personArray;
+    Object[] header = {"PersonID", "LastName", "FirstName", "HireDate", "EnrollmentDate"};
 
     public person() {
         initComponents();
@@ -298,13 +301,23 @@ public class person extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
     public void loadModel(ArrayList<Person> array) {
-        Object[] o = {"PersonID", "LastName", "FirstName", "HireDate", "EnrollmentDate"};
-        model = new DefaultTableModel(o, 0);
+
+        model = new DefaultTableModel(header, 0);
         for (Person a : array) {
             model.addRow(a.toObject());
         }
         jTable1.setModel(model);
         jComboBox1.setSelectedIndex(0);
+    }
+
+    protected void reloadModel() {
+        header = new Object[]{"PersonID", "LastName", "FirstName", "HireDate", "EnrollmentDate"};
+        try {
+            personArray = bll.ReadPerson();
+        } catch (SQLException ex) {
+            Logger.getLogger(person.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        loadModel(personArray);
     }
 
     public ArrayList<Person> getPersonArray() {

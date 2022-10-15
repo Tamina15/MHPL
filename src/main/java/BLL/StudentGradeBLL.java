@@ -30,6 +30,21 @@ public class StudentGradeBLL {
         }
     }
 
+    public void UpdateStudentGrade(ArrayList<StudentGrade> array, StudentGrade toChange) {
+        for (int i = 0; i < array.size(); i++) {
+            if (array.get(i).getEnrollmentID() == toChange.getEnrollmentID()) {
+                array.set(i, toChange);
+                try {
+                    dal.UpdateStudentGrade(toChange);
+                } catch (SQLException ex) {
+                    Logger.getLogger(StudentGradeBLL.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println(array.get(i).toString());
+                break;
+            }
+        }
+    }
+
     public void DeleteStudentGrade(ArrayList<StudentGrade> array, StudentGrade toDel) {
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getEnrollmentID() == toDel.getEnrollmentID()) {
@@ -51,7 +66,7 @@ public class StudentGradeBLL {
                 System.out.println(g.toString());
             }
         }
-        
+
         return temp;
     }
 //    public DefaultTableModel FindEnrollmentID(DefaultTableModel model, String name) {
@@ -69,4 +84,5 @@ public class StudentGradeBLL {
 //        }
 //        return newmodel;
 //    }
+
 }

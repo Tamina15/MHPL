@@ -272,8 +272,8 @@ public class course_manage extends javax.swing.JFrame {
             Time time = Time.valueOf(jTextField9.getText());
             c.setOffline(new Onsite(c.getCourseID(), location, days, time));
         }
-        bll.AddCourse(course.currentArray, c, jComboBox1.getSelectedIndex());
-        parent.loadModel(course.currentArray);
+        bll.AddCourse(course.CourseArray, c, jComboBox1.getSelectedIndex());
+        parent.loadModel(course.CourseArray);
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -298,8 +298,8 @@ public class course_manage extends javax.swing.JFrame {
             Time time = Time.valueOf(jTextField9.getText());
             c.setOffline(new Onsite(c.getCourseID(), location, days, time));
         }
-        bll.UpdateCourse(course.currentArray, c, jComboBox1.getSelectedIndex());
-        parent.loadModel(course.currentArray);
+        bll.UpdateCourse(course.CourseArray, c, jComboBox1.getSelectedIndex());
+        parent.loadModel(course.CourseArray);
         dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 

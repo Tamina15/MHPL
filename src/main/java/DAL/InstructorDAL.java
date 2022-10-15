@@ -12,19 +12,19 @@ import java.util.ArrayList;
 
 import DTO.Instructor;
 
-
 public class InstructorDAL extends DatabaseManager {
-	public InstructorDAL(){
+
+    public InstructorDAL() {
         super();
         ConnectDatabase();
     }
 
     public ArrayList ReadInstructors() throws SQLException {
-        String sql = "SELECT * FROM courseinstructor WHERE 1";
+        String sql = "SELECT courseinstructor.CourseID, courseinstructor.PersonID, course.Title, concat(person.Lastname ,\" \",person.Firstname) as name FROM `courseinstructor`, course, person WHERE course.CourseID= courseinstructor.CourseID AND person.PersonID = courseinstructor.PersonID";
         ResultSet rs = ExecuteQuery(sql);
         ArrayList<Instructor> array = new ArrayList<>();
         while (rs.next()) {
-            Instructor d = new Instructor(rs.getInt("CourseID"),rs.getInt("PersonID") );
+            Instructor d = new Instructor(rs.getInt("CourseID"), rs.getInt("PersonID"), rs.getString("Title"), rs.getString("name"));
         }
         return array;
     }
@@ -45,6 +45,7 @@ public class InstructorDAL extends DatabaseManager {
         int result = ps.executeUpdate();
         return result;
     }
+
     public int DeleteCourse(int courseid) throws SQLException {
         String sql = "DELETE FROM courseinstructor WHERE CourseID = ?";
         PreparedStatement ps = this.getConnection().prepareStatement(sql);
@@ -71,7 +72,7 @@ public class InstructorDAL extends DatabaseManager {
         ResultSet rs = ps.executeQuery();
         ArrayList<Instructor> array = new ArrayList<>();
         while (rs.next()) {
-        	Instructor d = new Instructor(rs.getInt("CourseID"),rs.getInt("PersonID") );
+            Instructor d = new Instructor(rs.getInt("CourseID"), rs.getInt("PersonID"), rs.getString("Title"), rs.getString("name"));
             array.add(d);
         }
         return array;
